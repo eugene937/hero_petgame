@@ -42,10 +42,12 @@ while current_action != "quit" and current_action != "": #main menu cycle
             break
 
     if current_action == "healing": #healing menu cycle
-        if health < 10:
+        if (health < 10 and potion_health_counter > 0):
             health = 10
             potion_health_counter = potion_health_counter -1  
             print("\nYou have been healed")
+        elif (health < 10 and potion_health_counter < 1):
+            print("\nYou don't have potion of health")
         else:
             print("\nYou don't need to be healed")
 
