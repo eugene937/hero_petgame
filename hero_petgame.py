@@ -1,14 +1,50 @@
 import random
 
-potion_health_counter = 3
-potion_health = "potion of health x"+str(potion_health_counter)
+#HEADER
 
-backpack = [potion_health,
-"item2",
-"item3",]
+class Loot:
+    def __init__(self, name, add_damage, add_health, count):
+        self.name = name
+        self.add_damage = add_damage
+        self.add_health = add_health
+        self.count = count
 
-hero_health = 70
-hero_damage = 10
+potion_health = Loot("potion of health", 0, 35, 3)
+potion_strength = Loot("potion of strength", 3, 0, 0)
+new_sword = Loot("new sword", 2, 0, 0)
+knife = Loot("knife", 1, 0, 0)
+stylish_hat = Loot("stylish hat", 0, 3, 0)
+patent_shoes = Loot("patent shoes", 0, 5, 0)
+knitted_mittens = Loot("knitted mittens", 0, 1, 0)
+nothing_loot = Loot("nothing", 0, 0, 0)
+
+looting = [potion_health.name,
+           potion_strength.name,
+           new_sword.name,
+           knife.name,
+           stylish_hat.name,
+           patent_shoes.name,
+           knitted_mittens.name,
+           nothing_loot.name,
+           nothing_loot.name,
+           nothing_loot.name,
+           nothing_loot.name,
+           nothing_loot.name,
+           nothing_loot.name]
+
+backpack = [(potion_health.name + " x" + str(potion_health.count)),
+            (potion_strength.name + " x" + str(potion_strength.count)),
+            (new_sword.name + " x" + str(new_sword.count)),
+            (knife.name + " x" + str(knife.count)),
+            (stylish_hat.name + " x" + str(stylish_hat.count)),
+            (patent_shoes.name + " x" + str(patent_shoes.count)),
+            (knitted_mittens.name + " x" + str(knitted_mittens.count))]
+
+hero_health_max = 100
+hero_health = 100
+hero_damage = random.randint(6,14)
+hero_damage_add = 0
+hero_damage_summ = hero_damage + hero_damage_add
 
 direction = ["forward",
 "right",
@@ -26,84 +62,50 @@ actions = ["backpack",
 "move",
 "quit"]
 
-ghoul_name = "ghoul"
-ghoul_health = 30
-ghoul_damage = 12
-ghoul = [ghoul_name,
-         ghoul_health,
-         ghoul_damage]
+class Creatures:
+  def __init__(self, name, health, damage, health_default):
+    self.name = name
+    self.health = health
+    self.damage = damage
+    self.health_default = health_default
 
-rat_name = "rat"
-rat_health = 7
-rat_damage = 3
-rat = [rat_name,
-       rat_health,
-       rat_damage]
+ghoul = Creatures("ghoul", 30, random.randint(8,16), 30)
+rat = Creatures("rat", 7, random.randint(2,5), 7)
+mutated_rat = Creatures("mutated rat", 12, random.randint(2,10), 12)
+feral_cat = Creatures("feral cat", 15, random.randint(4,12), 15)
+feral_dog = Creatures("feral dog", 17, random.randint(4,12), 17)
+mutated_snake = Creatures("mutated snake", 10, random.randint(1,9), 10)
+coyote = Creatures("coyote", 20, random.randint(6,14), 20)
+scorpion = Creatures("scorpion", 28, random.randint(10,18), 28)
 
-mutated_rat_name = "mutated rat"
-mutated_rat_health = 12
-mutated_rat_damage = 6
-mutated_rat = [mutated_rat_name,
-               mutated_rat_health,
-               mutated_rat_damage]
-
-feral_cat_name = "feral cat"
-feral_cat_health = 15
-feral_cat_damage = 8
-feral_cat = [feral_cat_name,
-             feral_cat_health,
-             feral_cat_damage]
-
-feral_dog_name = "feral dog"
-feral_dog_health = 17
-feral_dog_damage = 8
-feral_dog = [feral_dog_name,
-             feral_dog_health,
-             feral_dog_damage]
-
-mutated_snake_name = "mutated snake"
-mutated_snake_health = 10
-mutated_snake_damage = 5
-mutated_snake = [mutated_snake_name,
-                 mutated_snake_health,
-                 mutated_snake_damage]
-
-coyote_name = "coyote"
-coyote_health = 20
-coyote_damage = 10
-coyote = [coyote_name,
-          coyote_health,
-          coyote_damage]
-
-scorpion_name = "scorpion"
-scorpion_health = 28
-scorpion_damage = 14
-scorpion = [scorpion_name,
-            scorpion_health,
-            scorpion_damage]
-
-happenings = [ghoul[0], 
-              rat[0],
-              mutated_rat[0],
-              feral_cat[0],
-              feral_dog[0],
-              mutated_snake[0],
-              coyote[0],
-              scorpion[0],
+happenings = [ghoul.name, 
+              rat.name,
+              mutated_rat.name,
+              feral_cat.name,
+              feral_dog.name,
+              mutated_snake.name,
+              coyote.name,
+              scorpion.name,
               "someone's cache",
               "an broken house",
+              "nothing",
+              "nothing",
+              "nothing",
+              "nothing",
               "nothing"]
 
 current_action = "beginning"
 
-while current_action != "quit" and current_action != "" and hero_health > 0:                        #main menu cycle
+print("\n       _____________________________________\n       |          HERO - petgame           |\n       |          Try to survive           |\n       | Explore the area, fight creatures |\n       |                                   |\n       |      created by @eugene937.       |\n       ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+
+while current_action != "quit" and current_action != "" and hero_health > 0:                               #main menu cycle
     print("\nYour health:", str(hero_health) +"/100")
     print("What do you want to do? Available actions: ")
     for item in actions:
         print(item)
     current_action = input("\n>>> ")
 
-    while current_action == "backpack":                                         #backpack menu cycle
+    while current_action == "backpack":                                                                    #backpack menu cycle
         print("\nYour backpack contain", len(backpack), item_word +":")
         for item in backpack:
             print(item)
@@ -111,20 +113,84 @@ while current_action != "quit" and current_action != "" and hero_health > 0:    
         backpack_choose = input("\n>>>")
         if backpack_choose == "back":
             break
+        elif backpack_choose == potion_health.name:
+            if (hero_health < hero_health_max and potion_health.count > 0):
+                if (hero_health + potion_health.add_health) >= hero_health_max:
+                    hero_health = hero_health_max
+                    potion_health.count = potion_health.count -1
+                else:
+                    hero_health += potion_health.add_health
+                    potion_health.count = potion_health.count -1  
+                print("\nYou have been healed")
+                backpack[0] = (potion_health.name + " x" + str(potion_health.count))
+            elif (hero_health < hero_health_max and potion_health.count < 1):
+                print("\nYou don't have potion of health")
+        elif backpack_choose == potion_strength.name:
+            if (potion_strength.count > 0):
+                hero_damage_add += potion_strength.add_damage
+                potion_strength.count -= 1
+                print("\nYou feel stronger! Your damage was increased")
+                backpack[1] = (potion_strength.name + " x" + str(potion_strength.count))
+            elif (potion_strength.count < 1):
+                print("\nYou don't have potion of strength")
+        elif backpack_choose == new_sword.name:
+            if (new_sword.count > 0):
+                hero_damage_add += new_sword.add_damage
+                new_sword.count -= 1
+                print("\nYou look epic! Your damage was increased")
+                backpack[2] = (new_sword.name + " x" + str(new_sword.count))
+            elif (new_sword.count < 1):
+                print("\nYou don't have any sword")
+        elif backpack_choose == knife.name:
+            if (knife.count > 0):
+                hero_damage_add += knife.add_damage
+                knife.count -= 1
+                print("\nYou look scary! Your damage was increased")
+                backpack[3] = (knife.name + " x" + str(knife.count))
+            elif (knife.count < 1):
+                print("\nYou don't have any knife")
+        elif backpack_choose == stylish_hat.name:
+            if (stylish_hat.count > 0):
+                hero_health_max += stylish_hat.add_health
+                stylish_hat.count -= 1
+                print("\nYou look cool! Your health was increased")
+                backpack[4] = (stylish_hat.name + " x" + str(stylish_hat.count))
+            elif (stylish_hat.count < 1):
+                print("\nYou don't have any hat")
+        elif backpack_choose == patent_shoes.name:
+            if (patent_shoes.count > 0):
+                hero_health_max += patent_shoes.add_health
+                patent_shoes.count -= 1
+                print("\nNice shoes! Your health was increased")
+                backpack[5] = (patent_shoes.name + " x" + str(patent_shoes.count))
+            elif (patent_shoes.count < 1):
+                print("\nYou don't have any shoes")
+        elif backpack_choose == knitted_mittens.name:
+            if (knitted_mittens.count > 0):
+                hero_health_max += knitted_mittens.add_health
+                knitted_mittens.count -= 1
+                print("\nOooh, that's so cute! Your health was increased")
+                backpack[6] = (knitted_mittens.name + " x" + str(knitted_mittens.count))
+            elif (knitted_mittens.count < 1):
+                print("\nYou don't have any mittens")
 
-    if current_action == "healing":                                             #healing menu cycle
-        if (hero_health < 100 and potion_health_counter > 0):
-            hero_health = 100
-            potion_health_counter = potion_health_counter -1  
-            print("\nYou have been healed")
-            backpack[0] = "potion of health x"+str(potion_health_counter)
-        elif (hero_health < 100 and potion_health_counter < 1):
-            print("\nYou don't have potion of health")
+    if current_action == "healing":                                                                      #healing menu cycle
+        if (hero_health < hero_health_max and potion_health.count > 0):
+                if (hero_health + potion_health.add_health) >= hero_health_max:
+                    hero_health = hero_health_max
+                    potion_health.count = potion_health.count -1
+                else:
+                    hero_health += potion_health.add_health
+                    potion_health.count = potion_health.count -1  
+                    print("\nYou have been healed")
+                    backpack[0] = (potion_health.name + " x" + str(potion_health.count))
+        elif (hero_health < hero_health_max and potion_health.count < 1):
+                print("\nYou don't have potion of health")
         else:
             print("\nYou don't need to be healed")
 
-    while current_action == "move" and hero_health > 0:                                             #moving menu cycle
-        print("\nAvailable direction:")
+    while current_action == "move" and hero_health > 0:                                                  #moving menu cycle
+        print("\nAvailable directions:")
         for item in direction:
             print(item)
         print("Choose direction or print \"back\" to leave direction menu")
@@ -134,584 +200,916 @@ while current_action != "quit" and current_action != "" and hero_health > 0:    
             print("You choose to stay here for a while")
             break
 
-        elif direction_choose == direction[0]:                                  #move forward
+        elif direction_choose == direction[0]:                                                           #move forward
             print("You have moved", direction[0])
             current_happening = random.choice(happenings)
             if current_happening == happenings[0]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[0] and ghoul_health > 0 and hero_health > 0):
-                    hero_health -= ghoul_damage
-                    print("\n" + current_happening + " damage you "+ str(str(ghoul_damage)) + " points! Your health now is " + str(hero_health) + "/100")
-                    ghoul_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if ghoul_health < 1:
+                while (current_happening == happenings[0] and ghoul.health > 0 and hero_health > 0):
+                    ghoul.damage = random.randint(8,16)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= ghoul.damage
+                    ghoul.health -= hero_damage_summ
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif ghoul.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                ghoul.health = ghoul.health_default
             elif current_happening == happenings[1]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[1] and rat_health > 0 and hero_health > 0):
-                    hero_health -= rat_damage
-                    print("\n" + current_happening + " damage you "+ str(rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if rat_health < 1:
+                while (current_happening == happenings[1] and rat.health > 0 and hero_health > 0):
+                    rat.damage = random.randint(2,5)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= rat.damage
+                    rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                rat.health = rat.health_default
             elif current_happening == happenings[2]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[2] and mutated_rat_health > 0 and hero_health > 0):
-                    hero_health -= mutated_rat_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_rat_health < 1:
+                while (current_happening == happenings[2] and mutated_rat.health > 0 and hero_health > 0):
+                    mutated_rat.damage = random.randint(2,10)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_rat.damage
+                    mutated_rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_rat.health = mutated_rat.health_default
             elif current_happening == happenings[3]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[3] and feral_cat_health > 0 and hero_health > 0):
-                    hero_health -= feral_cat_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_cat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_cat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_cat_health < 1:
-                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
-                        input("\npress any key to continue")
+                while (current_happening == happenings[3] and feral_cat.health > 0 and hero_health > 0):
+                    feral_cat.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add                    
+                    hero_health -= feral_cat.damage
+                    feral_cat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
+                    elif feral_cat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
+                        input("\npress any key to continue")                            
                         break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_cat.health = feral_cat.health_default
             elif current_happening == happenings[4]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[4] and feral_dog_health > 0 and hero_health > 0):
-                    hero_health -= feral_dog_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_dog_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_dog_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_dog_health < 1:
+                while (current_happening == happenings[4] and feral_dog.health > 0 and hero_health > 0):
+                    feral_dog.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= feral_dog.damage
+                    feral_dog.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif feral_dog.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_dog.health = feral_dog.health_default
             elif current_happening == happenings[5]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[5] and mutated_snake_health > 0 and hero_health > 0):
-                    hero_health -= mutated_snake_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_snake_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_snake_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_snake_health < 1:
+                while (current_happening == happenings[5] and mutated_snake.health > 0 and hero_health > 0):
+                    mutated_snake.damage = random.randint(1,9)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_snake.damage
+                    mutated_snake.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_snake.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_snake.health = mutated_snake.health_default
             elif current_happening == happenings[6]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[6] and coyote_health > 0 and hero_health > 0):
-                    hero_health -= coyote_damage
-                    print("\n" + current_happening + " damage you "+ str(coyote_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    coyote_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if coyote_health < 1:
+                while (current_happening == happenings[6] and coyote.health > 0 and hero_health > 0):
+                    coyote.damage = random.randint(6,14)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= coyote.damage
+                    coyote.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif coyote.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                coyote.health = coyote.health_default
             elif current_happening == happenings[7]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[7] and scorpion_health > 0 and hero_health > 0):
-                    hero_health -= scorpion_damage
-                    print("\n" + current_happening + " damage you "+ str(scorpion_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    scorpion_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if scorpion_health < 1:
+                while (current_happening == happenings[7] and scorpion.health > 0 and hero_health > 0):
+                    scorpion.damage = random.randint(10,18)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= scorpion.damage
+                    scorpion.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif scorpion.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                scorpion.health = scorpion.health_default
             elif (current_happening == happenings[8]
-               or current_happening == happenings[9]):    
-                print("You found " + current_happening)
-            elif current_happening == happenings[10]:    
+               or current_happening == happenings[9]):
+                current_looting = random.choice(looting)
+                if current_looting == potion_health.name:
+                    potion_health.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == potion_strength.name:
+                    potion_strength.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == new_sword.name:
+                    new_sword.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knife.name:
+                    knife.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == stylish_hat.name:
+                    stylish_hat.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == patent_shoes.name:
+                    patent_shoes.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knitted_mittens.name:
+                    knitted_mittens.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == nothing_loot.name:
+                    print("You found " + current_happening + ". There was " + current_looting)
+            elif (current_happening == happenings[10]
+               or current_happening == happenings[11]
+               or current_happening == happenings[12]
+               or current_happening == happenings[13]
+               or current_happening == happenings[14]):    
                 print("There is " + current_happening + " in this place")
 
-        elif direction_choose == direction[1]:                                  #move right
+        elif direction_choose == direction[1]:                                                                   #move right
             print("You have moved", direction[1])
             current_happening = random.choice(happenings)
             if current_happening == happenings[0]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[0] and ghoul_health > 0 and hero_health > 0):
-                    hero_health -= ghoul_damage
-                    print("\n" + current_happening + " damage you "+ str(ghoul_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    ghoul_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if ghoul_health < 1:
+                while (current_happening == happenings[0] and ghoul.health > 0 and hero_health > 0):
+                    ghoul.damage = random.randint(8,16)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= ghoul.damage
+                    ghoul.health -= hero_damage_summ
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif ghoul.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                ghoul.health = ghoul.health_default
             elif current_happening == happenings[1]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[1] and rat_health > 0 and hero_health > 0):
-                    hero_health -= rat_damage
-                    print("\n" + current_happening + " damage you "+ str(rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if rat_health < 1:
+                while (current_happening == happenings[1] and rat.health > 0 and hero_health > 0):
+                    rat.damage = random.randint(2,5)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= rat.damage
+                    rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                rat.health = rat.health_default
             elif current_happening == happenings[2]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[2] and mutated_rat_health > 0 and hero_health > 0):
-                    hero_health -= mutated_rat_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_rat_health < 1:
+                while (current_happening == happenings[2] and mutated_rat.health > 0 and hero_health > 0):
+                    mutated_rat.damage = random.randint(2,10)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_rat.damage
+                    mutated_rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_rat.health = mutated_rat.health_default
             elif current_happening == happenings[3]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[3] and feral_cat_health > 0 and hero_health >0):
-                    hero_health -= feral_cat_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_cat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_cat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_cat_health < 1:
-                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
-                        input("\npress any key to continue")
+                while (current_happening == happenings[3] and feral_cat.health > 0 and hero_health > 0):
+                    feral_cat.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add                    
+                    hero_health -= feral_cat.damage
+                    feral_cat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
+                    elif feral_cat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
+                        input("\npress any key to continue")                            
                         break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_cat.health = feral_cat.health_default
             elif current_happening == happenings[4]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[4] and feral_dog_health > 0 and hero_health >0):
-                    hero_health -= feral_dog_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_dog_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_dog_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_dog_health < 1:
+                while (current_happening == happenings[4] and feral_dog.health > 0 and hero_health > 0):
+                    feral_dog.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= feral_dog.damage
+                    feral_dog.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif feral_dog.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_dog.health = feral_dog.health_default
             elif current_happening == happenings[5]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[5] and mutated_snake_health > 0 and hero_health >0):
-                    hero_health -= mutated_snake_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_snake_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_snake_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_snake_health < 1:
+                while (current_happening == happenings[5] and mutated_snake.health > 0 and hero_health > 0):
+                    mutated_snake.damage = random.randint(1,9)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_snake.damage
+                    mutated_snake.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_snake.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_snake.health = mutated_snake.health_default
             elif current_happening == happenings[6]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[6] and coyote_health > 0 and hero_health >0):
-                    hero_health -= coyote_damage
-                    print("\n" + current_happening + " damage you "+ str(coyote_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    coyote_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if coyote_health < 1:
+                while (current_happening == happenings[6] and coyote.health > 0 and hero_health > 0):
+                    coyote.damage = random.randint(6,14)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= coyote.damage
+                    coyote.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif coyote.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                coyote.health = coyote.health_default
             elif current_happening == happenings[7]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[7] and scorpion_health > 0 and hero_health >0):
-                    hero_health -= scorpion_damage
-                    print("\n" + current_happening + " damage you "+ str(scorpion_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    scorpion_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if scorpion_health < 1:
+                while (current_happening == happenings[7] and scorpion.health > 0 and hero_health > 0):
+                    scorpion.damage = random.randint(10,18)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= scorpion.damage
+                    scorpion.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif scorpion.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                scorpion.health = scorpion.health_default
             elif (current_happening == happenings[8]
-               or current_happening == happenings[9]):    
-                print("You found " + current_happening)
-            elif current_happening == happenings[10]:    
+               or current_happening == happenings[9]):
+                current_looting = random.choice(looting)
+                if current_looting == potion_health.name:
+                    potion_health.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == potion_strength.name:
+                    potion_strength.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == new_sword.name:
+                    new_sword.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knife.name:
+                    knife.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == stylish_hat.name:
+                    stylish_hat.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == patent_shoes.name:
+                    patent_shoes.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knitted_mittens.name:
+                    knitted_mittens.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == nothing_loot.name:
+                    print("You found " + current_happening + ". There was " + current_looting)
+            elif (current_happening == happenings[10]
+               or current_happening == happenings[11]
+               or current_happening == happenings[12]
+               or current_happening == happenings[13]
+               or current_happening == happenings[14]):    
                 print("There is " + current_happening + " in this place")
 
-        elif direction_choose == direction[2]:                                  #move backward
+        elif direction_choose == direction[2]:                                                                       #move backward
             print("You have moved", direction[2])
             current_happening = random.choice(happenings)
             if current_happening == happenings[0]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[0] and ghoul_health > 0 and hero_health >0):
-                    hero_health -= ghoul_damage
-                    print("\n" + current_happening + " damage you "+ str(ghoul_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    ghoul_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if ghoul_health < 1:
+                while (current_happening == happenings[0] and ghoul.health > 0 and hero_health > 0):
+                    ghoul.damage = random.randint(8,16)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= ghoul.damage
+                    ghoul.health -= hero_damage_summ
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif ghoul.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                ghoul.health = ghoul.health_default
             elif current_happening == happenings[1]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[1] and rat_health > 0 and hero_health >0):
-                    hero_health -= rat_damage
-                    print("\n" + current_happening + " damage you "+ str(rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if rat_health < 1:
+                while (current_happening == happenings[1] and rat.health > 0 and hero_health > 0):
+                    rat.damage = random.randint(2,5)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= rat.damage
+                    rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                rat.health = rat.health_default
             elif current_happening == happenings[2]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[2] and mutated_rat_health > 0 and hero_health >0):
-                    hero_health -= mutated_rat_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_rat_health < 1:
+                while (current_happening == happenings[2] and mutated_rat.health > 0 and hero_health > 0):
+                    mutated_rat.damage = random.randint(2,10)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_rat.damage
+                    mutated_rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_rat.health = mutated_rat.health_default
             elif current_happening == happenings[3]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[3] and feral_cat_health > 0 and hero_health >0):
-                    hero_health -= feral_cat_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_cat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_cat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_cat_health < 1:
-                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
-                        input("\npress any key to continue")
+                while (current_happening == happenings[3] and feral_cat.health > 0 and hero_health > 0):
+                    feral_cat.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add                    
+                    hero_health -= feral_cat.damage
+                    feral_cat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
+                    elif feral_cat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
+                        input("\npress any key to continue")                            
                         break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_cat.health = feral_cat.health_default
             elif current_happening == happenings[4]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[4] and feral_dog_health > 0 and hero_health >0):
-                    hero_health -= feral_dog_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_dog_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_dog_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_dog_health < 1:
+                while (current_happening == happenings[4] and feral_dog.health > 0 and hero_health > 0):
+                    feral_dog.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= feral_dog.damage
+                    feral_dog.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif feral_dog.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_dog.health = feral_dog.health_default
             elif current_happening == happenings[5]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[5] and mutated_snake_health > 0 and hero_health >0):
-                    hero_health -= mutated_snake_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_snake_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_snake_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_snake_health < 1:
+                while (current_happening == happenings[5] and mutated_snake.health > 0 and hero_health > 0):
+                    mutated_snake.damage = random.randint(1,9)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_snake.damage
+                    mutated_snake.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_snake.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_snake.health = mutated_snake.health_default
             elif current_happening == happenings[6]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[6] and coyote_health > 0 and hero_health >0):
-                    hero_health -= coyote_damage
-                    print("\n" + current_happening + " damage you "+ str(coyote_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    coyote_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if coyote_health < 1:
+                while (current_happening == happenings[6] and coyote.health > 0 and hero_health > 0):
+                    coyote.damage = random.randint(6,14)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= coyote.damage
+                    coyote.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif coyote.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                coyote.health = coyote.health_default
             elif current_happening == happenings[7]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[7] and scorpion_health > 0 and hero_health >0):
-                    hero_health -= scorpion_damage
-                    print("\n" + current_happening + " damage you "+ str(scorpion_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    scorpion_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if scorpion_health < 1:
+                while (current_happening == happenings[7] and scorpion.health > 0 and hero_health > 0):
+                    scorpion.damage = random.randint(10,18)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= scorpion.damage
+                    scorpion.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif scorpion.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                scorpion.health = scorpion.health_default
             elif (current_happening == happenings[8]
-               or current_happening == happenings[9]):    
-                print("You found " + current_happening)
-            elif current_happening == happenings[10]:    
+               or current_happening == happenings[9]):
+                current_looting = random.choice(looting)
+                if current_looting == potion_health.name:
+                    potion_health.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == potion_strength.name:
+                    potion_strength.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == new_sword.name:
+                    new_sword.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knife.name:
+                    knife.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == stylish_hat.name:
+                    stylish_hat.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == patent_shoes.name:
+                    patent_shoes.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knitted_mittens.name:
+                    knitted_mittens.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == nothing_loot.name:
+                    print("You found " + current_happening + ". There was " + current_looting)
+            elif (current_happening == happenings[10]
+               or current_happening == happenings[11]
+               or current_happening == happenings[12]
+               or current_happening == happenings[13]
+               or current_happening == happenings[14]):    
                 print("There is " + current_happening + " in this place")
 
-        elif direction_choose == direction[3]:                                  #move left
+        elif direction_choose == direction[3]:                                                                           #move left
             print("You have moved", direction[3])
             current_happening = random.choice(happenings)
             if current_happening == happenings[0]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[0] and ghoul_health > 0 and hero_health >0):
-                    hero_health -= ghoul_damage
-                    print("\n" + current_happening + " damage you "+ str(ghoul_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    ghoul_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if ghoul_health < 1:
+                while (current_happening == happenings[0] and ghoul.health > 0 and hero_health > 0):
+                    ghoul.damage = random.randint(8,16)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= ghoul.damage
+                    ghoul.health -= hero_damage_summ
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif ghoul.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(ghoul.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                ghoul.health = ghoul.health_default
             elif current_happening == happenings[1]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[1] and rat_health > 0 and hero_health >0):
-                    hero_health -= rat_damage
-                    print("\n" + current_happening + " damage you "+ str(rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if rat_health < 1:
+                while (current_happening == happenings[1] and rat.health > 0 and hero_health > 0):
+                    rat.damage = random.randint(2,5)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= rat.damage
+                    rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                rat.health = rat.health_default
             elif current_happening == happenings[2]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[2] and mutated_rat_health > 0 and hero_health >0):
-                    hero_health -= mutated_rat_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_rat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_rat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_rat_health < 1:
+                while (current_happening == happenings[2] and mutated_rat.health > 0 and hero_health > 0):
+                    mutated_rat.damage = random.randint(2,10)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_rat.damage
+                    mutated_rat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_rat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_rat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_rat.health = mutated_rat.health_default
             elif current_happening == happenings[3]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[3] and feral_cat_health > 0 and hero_health >0):
-                    hero_health -= feral_cat_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_cat_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_cat_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_cat_health < 1:
-                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
-                        input("\npress any key to continue")
+                while (current_happening == happenings[3] and feral_cat.health > 0 and hero_health > 0):
+                    feral_cat.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add                    
+                    hero_health -= feral_cat.damage
+                    feral_cat.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points!")
+                        print(current_happening + " killed you\n")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
+                    elif feral_cat.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                        print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
+                        input("\npress any key to continue")                            
                         break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_cat.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_cat.health = feral_cat.health_default
             elif current_happening == happenings[4]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[4] and feral_dog_health > 0 and hero_health >0):
-                    hero_health -= feral_dog_damage
-                    print("\n" + current_happening + " damage you "+ str(feral_dog_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    feral_dog_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if feral_dog_health < 1:
+                while (current_happening == happenings[4] and feral_dog.health > 0 and hero_health > 0):
+                    feral_dog.damage = random.randint(4,12)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= feral_dog.damage
+                    feral_dog.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif feral_dog.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(feral_dog.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                feral_dog.health = feral_dog.health_default
             elif current_happening == happenings[5]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[5] and mutated_snake_health > 0 and hero_health >0):
-                    hero_health -= mutated_snake_damage
-                    print("\n" + current_happening + " damage you "+ str(mutated_snake_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    mutated_snake_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if mutated_snake_health < 1:
+                while (current_happening == happenings[5] and mutated_snake.health > 0 and hero_health > 0):
+                    mutated_snake.damage = random.randint(1,9)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= mutated_snake.damage
+                    mutated_snake.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif mutated_snake.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(mutated_snake.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                mutated_snake.health = mutated_snake.health_default
             elif current_happening == happenings[6]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[6] and coyote_health > 0 and hero_health >0):
-                    hero_health -= coyote_damage
-                    print("\n" + current_happening + " damage you "+ str(coyote_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    coyote_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if coyote_health < 1:
+                while (current_happening == happenings[6] and coyote.health > 0 and hero_health > 0):
+                    coyote.damage = random.randint(6,14)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= coyote.damage
+                    coyote.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif coyote.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(coyote.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                coyote.health = coyote.health_default
             elif current_happening == happenings[7]:
                 print("You will have a fight with " + current_happening + "!")
-                while (current_happening == happenings[7] and scorpion_health > 0 and hero_health >0):
-                    hero_health -= scorpion_damage
-                    print("\n" + current_happening + " damage you "+ str(scorpion_damage) + " points! Your health now is " + str(hero_health) + "/100")
-                    scorpion_health -= hero_damage
-                    print("\nYou damage " + current_happening + + str(hero_damage) + " points!")
-                    if scorpion_health < 1:
+                while (current_happening == happenings[7] and scorpion.health > 0 and hero_health > 0):
+                    scorpion.damage = random.randint(10,18)
+                    hero_damage = random.randint(6,14)
+                    hero_damage_summ = hero_damage + hero_damage_add
+                    hero_health -= scorpion.damage
+                    scorpion.health -= hero_damage
+                    if hero_health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points!")
+                        print(current_happening + " killed you\n")
+                        break
+                    elif scorpion.health < 1:
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
                         print("You win " + current_happening + ". Your health now is " + str(hero_health) + "/100")
                         input("\npress any key to continue")
                         break
-                    elif hero_health < 1:
-                        print(current_happening + "killed you")
-                        break
                     else:
-                        input("\npress any key to continue")
+                        print("\n" + current_happening + " damage you " + str(str(scorpion.damage)) + " points! Your health now is " + str(hero_health) + "/100")
+                        print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
+                        input("\npress any key to attack")
                         continue
+                scorpion.health = scorpion.health_default
             elif (current_happening == happenings[8]
-               or current_happening == happenings[9]):    
-                print("You found " + current_happening)
-            elif current_happening == happenings[10]:    
+               or current_happening == happenings[9]):
+                current_looting = random.choice(looting)
+                if current_looting == potion_health.name:
+                    potion_health.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == potion_strength.name:
+                    potion_strength.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == new_sword.name:
+                    new_sword.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knife.name:
+                    knife.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == stylish_hat.name:
+                    stylish_hat.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == patent_shoes.name:
+                    patent_shoes.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == knitted_mittens.name:
+                    knitted_mittens.count += 1
+                    print("You found " + current_happening + ". There was " + current_looting + ". It added to your backpack")
+                elif current_looting == nothing_loot.name:
+                    print("You found " + current_happening + ". There was " + current_looting)
+            elif (current_happening == happenings[10]
+               or current_happening == happenings[11]
+               or current_happening == happenings[12]
+               or current_happening == happenings[13]
+               or current_happening == happenings[14]):    
                 print("There is " + current_happening + " in this place")
 
         else:
