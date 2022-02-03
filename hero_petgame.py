@@ -89,7 +89,9 @@ else:
 actions = ["1. backpack",
            "2. healing",
            "3. move",
-           "4. quit"]
+           "4. save",
+           "5. load",
+           "6. quit"]
 
 leave_choose = ""
 def leave_input():
@@ -187,6 +189,12 @@ def healing():
         print("\nYou don't have potion of health")
     else:
         print("\nYou don't need to be healed")
+        
+def save_game():
+    print ("Your progress is saved")
+
+def load_game():
+    print ("Your progress is loaded")
 
 
 #MAIN
@@ -209,12 +217,18 @@ while hero_health > 0:              #main menu cycle
         print(item)
     current_action = input("\n>>> ").lower()
 
-    if current_action == "quit" or current_action == "4":
+    if current_action == "quit" or current_action == "6":
         leave_input()  
         if leave_choose == "y":
             break
         elif leave_choose == "n":
             continue
+    
+    if current_action == "save" or current_action == "4":
+        save_game()  
+        
+    if current_action == "load" or current_action == "5":
+        load_game()
 
     while (current_action == "backpack" or current_action == "1") and hero_health > 0:              #backpack menu cycle
         show_backpack()
