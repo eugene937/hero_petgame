@@ -41,7 +41,14 @@ looting = [potion_health.name,         ### create def with random and etc here
            nothing_loot.name,
            nothing_loot.name]
 
-backpack = ""
+backpack = [(str(potion_health.position) + ". " + potion_health.name + " x" + str(potion_health.count)),
+            (str(potion_strength.position) + ". " + potion_strength.name + " x" + str(potion_strength.count)),
+            (str(new_sword.position) + ". " + new_sword.name + " x" + str(new_sword.count)),
+            (str(knife.position) + ". " + knife.name + " x" + str(knife.count)),
+            (str(stylish_hat.position) + ". " + stylish_hat.name + " x" + str(stylish_hat.count)),
+            (str(patent_shoes.position) + ". " + patent_shoes.name + " x" + str(patent_shoes.count)),
+            (str(knitted_mittens.position) + ". " + knitted_mittens.name + " x" + str(knitted_mittens.count))]
+
 def show_backpack():
     global backpack
     global potion_health
@@ -178,10 +185,10 @@ while hero_health > 0:                               #main menu cycle
 
     if current_action == "quit" or current_action == "4":
         leave_input()     
-    if leave_choose == "y":
-        break
-    elif leave_choose == "n":
-        continue
+        if leave_choose == "y":
+            break
+        elif leave_choose == "n":
+            continue
 
     while (current_action == "backpack" or current_action == "1") and hero_health > 0:                                               #backpack menu cycle
         show_backpack()
@@ -199,7 +206,7 @@ while hero_health > 0:                               #main menu cycle
                     potion_health.count = potion_health.count -1  
                 print("\nYou have been healed.")
                 health_info()
-                backpack[0] = (potion_health.name + " x" + str(potion_health.count))
+                backpack[0] = (str(potion_health.position) + ". " + potion_health.name + " x" + str(potion_health.count))
             elif (hero_health < hero_health_max and potion_health.count < 1):
                 print("\nYou don't have potion of health")
             else:
@@ -264,7 +271,7 @@ while hero_health > 0:                               #main menu cycle
                     hero_health += potion_health.add_health
                     potion_health.count = potion_health.count -1  
                     print("\nYou have been healed")
-                    backpack[0] = (potion_health.name + " x" + str(potion_health.count))
+                    backpack[0] = (str(potion_health.position) + ". " + potion_health.name + " x" + str(potion_health.count))
         elif (hero_health < hero_health_max and potion_health.count < 1):
                 print("\nYou don't have potion of health")
         else:
@@ -482,29 +489,54 @@ while hero_health > 0:                               #main menu cycle
             elif (current_happening == happenings[8]
                or current_happening == happenings[9]):
                 current_looting = random.choice(looting)
-                if current_looting == potion_health.name:
-                    potion_health.count += 1
-                    found_info()
-                elif current_looting == potion_strength.name:
-                    potion_strength.count += 1
-                    found_info()
-                elif current_looting == new_sword.name:
-                    new_sword.count += 1
-                    found_info()
-                elif current_looting == knife.name:
-                    knife.count += 1
-                    found_info()
-                elif current_looting == stylish_hat.name:
-                    stylish_hat.count += 1
-                    found_info()
-                elif current_looting == patent_shoes.name:
-                    patent_shoes.count += 1
-                    found_info()
-                elif current_looting == knitted_mittens.name:
-                    knitted_mittens.count += 1
-                    found_info()
-                elif current_looting == nothing_loot.name:
-                    print("You found " + current_happening + ". There was " + current_looting)
+                match current_looting:
+                    case potion_health.name:
+                        potion_health.count += 1
+                        found_info()
+                    case potion_strength.name:
+                        potion_strength.count += 1
+                        found_info()
+                    case new_sword.name:
+                        new_sword.count += 1
+                        found_info()
+                    case knife.name:
+                        knife.count += 1
+                        found_info()
+                    case stylish_hat.name:
+                        stylish_hat.count += 1
+                        found_info()
+                    case patent_shoes.name:
+                        patent_shoes.count += 1
+                        found_info()
+                    case knitted_mittens.name:
+                        knitted_mittens.count += 1
+                        found_info()
+                    case nothing_loot.name:
+                        print("You found " + current_happening + ". There was " + current_looting)
+
+                #if current_looting == potion_health.name:
+                #    potion_health.count += 1
+                #    found_info()
+                #elif current_looting == potion_strength.name:
+                #    potion_strength.count += 1
+                #    found_info()
+                #elif current_looting == new_sword.name:
+                #    new_sword.count += 1
+                #    found_info()
+                #elif current_looting == knife.name:
+                #    knife.count += 1
+                #    found_info()
+                #elif current_looting == stylish_hat.name:
+                #    stylish_hat.count += 1
+                #    found_info()
+                #elif current_looting == patent_shoes.name:
+                #    patent_shoes.count += 1
+                #    found_info()
+                #elif current_looting == knitted_mittens.name:
+                #    knitted_mittens.count += 1
+                #    found_info()
+                #elif current_looting == nothing_loot.name:
+                #    print("You found " + current_happening + ". There was " + current_looting)
             elif (current_happening == happenings[10]
                or current_happening == happenings[11]
                or current_happening == happenings[12]
