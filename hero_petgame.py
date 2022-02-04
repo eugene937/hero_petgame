@@ -1,4 +1,5 @@
 import random
+import json
 
 #HEADER
 
@@ -9,22 +10,15 @@ class Loot:
         self.add_damage = add_damage
         self.add_health = add_health
         self.count = count
-        global potion_health
-        global potion_strength
-        global new_sword
-        global knife
-        global stylish_hat
-        global patent_shoes
-        global knitted_mittens
-        global nothing_loot
+        global potion_health, potion_strength, new_sword, knife, stylish_hat, patent_shoes, knitted_mittens, nothing_loot
 
 potion_health = Loot(1, "potion of health", 0, 30, 5)
 potion_strength = Loot(2, "potion of strength", 3, 0, 0)
 new_sword = Loot(3, "new sword", 2, 0, 0)
 knife = Loot(4, "knife", 1, 0, 0)
-stylish_hat = Loot(5, "stylish hat", 0, 3, 1)
-patent_shoes = Loot(6, "patent shoes", 0, 5, 1)
-knitted_mittens = Loot(7, "knitted mittens", 0, 1, 1)
+stylish_hat = Loot(5, "stylish hat", 0, 3, 0)
+patent_shoes = Loot(6, "patent shoes", 0, 5, 0)
+knitted_mittens = Loot(7, "knitted mittens", 0, 1, 0)
 nothing_loot = Loot(8, "nothing", 0, 0, 0)
 
 looting = [potion_health.name,      
@@ -50,14 +44,7 @@ backpack = [(str(potion_health.position) + ". " + potion_health.name + " x" + st
             (str(knitted_mittens.position) + ". " + knitted_mittens.name + " x" + str(knitted_mittens.count))]
 
 def show_backpack():
-    global backpack
-    global potion_health
-    global potion_strength
-    global new_sword
-    global knife
-    global stylish_hat
-    global patent_shoes
-    global knitted_mittens
+    global backpack, potion_health, potion_strength, new_sword, knife, stylish_hat, patent_shoes, knitted_mittens
     backpack = [(str(potion_health.position) + ". " + potion_health.name + " x" + str(potion_health.count)),
             (str(potion_strength.position) + ". " + potion_strength.name + " x" + str(potion_strength.count)),
             (str(new_sword.position) + ". " + new_sword.name + " x" + str(new_sword.count)),
@@ -133,11 +120,6 @@ happenings = [ghoul.name,
 
 current_action = "beginning"
 
-def health_info():
-    global hero_health
-    global hero_health_max
-    print("Your health:", str(hero_health) + "/" + str(hero_health_max))
-
 def winning_info():
     global current_happening
     print("You win " + current_happening + ". ")
@@ -147,19 +129,14 @@ def found_info():
     global current_happening
     global current_looting
     print("You found " + current_happening + ". There was " + current_looting + ". It's added to your backpack")
+    
+def health_info():
+    global hero_health
+    global hero_health_max
+    print("Your health:", str(hero_health) + "/" + str(hero_health_max))
 
 def return_damage():
-    global ghoul
-    global rat
-    global mutated_rat
-    global feral_cat
-    global feral_dog
-    global mutated_snake
-    global coyote
-    global scorpion
-    global hero_damage
-    global hero_damage_add
-    global hero_damage_summ
+    global ghoul, rat, mutated_rat, feral_cat, feral_dog, mutated_snake, coyote, scorpion, hero_damage, hero_damage_add, hero_damage_summ
     ghoul.damage = random.randint(7,13)
     rat.damage = random.randint(2,5)
     mutated_rat.damage = random.randint(2,10)
@@ -172,10 +149,7 @@ def return_damage():
     hero_damage_summ = hero_damage + hero_damage_add
     
 def healing():
-    global hero_health
-    global hero_health_max
-    global potion_health
-    global backpack
+    global hero_health, hero_health_max, potion_health, backpack
     if (hero_health < hero_health_max and potion_health.count > 0):
         if (hero_health + potion_health.add_health) >= hero_health_max:
             hero_health = hero_health_max
@@ -191,10 +165,42 @@ def healing():
         print("\nYou don't need to be healed")
         
 def save_game():
-    print ("Your progress is saved")
+    global hero_health, hero_health_max, potion_health, potion_strength, new_sword, knife, stylish_hat, patent_shoes, knitted_mittens
+    saving = {
+        "hero_health" : hero_health,
+        "hero_health_max" : hero_health_max,
+        "potion_health.count" : potion_health.count,
+        "potion_strength.count" : potion_strength.count,
+        "new_sword.count" : new_sword.count,
+        "knife.count" : knife.count,
+        "stylish_hat.count" : stylish_hat.count,
+        "patent_shoes.count" : patent_shoes.count,
+        "knitted_mittens.count" : knitted_mittens.count
+    } 
+    json_object = json.dumps(saving, indent = 9)
+    with open("save.sgptg", "w") as outfile:
+        outfile.write(json_object)
+    print("Your progress was succesfully saved")
 
 def load_game():
-    print ("Your progress is loaded")
+    global hero_health, hero_health_max, potion_health, potion_strength, new_sword, knife, stylish_hat, patent_shoes, knitted_mittens
+    try:
+        with open('save.sgptg', 'r') as openfile:
+            json_object = json.load(openfile)
+            hero_health = json_object["hero_health"]
+            hero_health_max = json_object["hero_health_max"]
+            potion_health.count = json_object["potion_health.count"]
+            potion_strength.count = json_object["potion_strength.count"]
+            new_sword.count = json_object["new_sword.count"]
+            knife.count = json_object["knife.count"]
+            stylish_hat.count = json_object["stylish_hat.count"]
+            patent_shoes.count = json_object["patent_shoes.count"]
+            knitted_mittens.count = json_object["knitted_mittens.count"]
+        print("Your progress was succesfully loaded")
+    except FileNotFoundError:
+       print("You don't have any savings")
+    except:
+        print("Oops! Something went wrong...")        
 
 
 #MAIN
@@ -206,7 +212,7 @@ print("""
        |          Try to survive           |
        | Explore the area, fight creatures |
        |                                   |
-       |      created by @eugene937.       |
+       |      created by @eugene937        |
        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾""")
 
 while hero_health > 0:              #main menu cycle
