@@ -133,7 +133,7 @@ def found_info():
 def health_info():
     global hero_health
     global hero_health_max
-    print("Your health:", str(hero_health) + "/" + str(hero_health_max))
+    print("Your health: {}".format(hero_health) + "/" + "{}".format(hero_health_max))
 
 def return_damage():
     global ghoul, rat, mutated_rat, feral_cat, feral_dog, mutated_snake, coyote, scorpion, hero_damage, hero_damage_add, hero_damage_summ
@@ -242,44 +242,44 @@ while hero_health > 0:              #main menu cycle
         backpack_choose = input("\n>>> ").lower()
         if backpack_choose == "back":
             break
-        elif (backpack_choose == potion_health.name or backpack_choose == str(potion_health.position)):
+        elif (backpack_choose == potion_health.name or backpack_choose == "{}".format(potion_health.position)):
             healing()
-        elif (backpack_choose == potion_strength.name or backpack_choose == str(potion_strength.position)):
+        elif (backpack_choose == potion_strength.name or backpack_choose == "{}".format(potion_strength.position)):
             if (potion_strength.count > 0):
                 hero_damage_add += potion_strength.add_damage
                 potion_strength.count -= 1
                 print("\nYou feel stronger! Your damage was increased")
             elif (potion_strength.count < 1):
                 print("\nYou don't have potion of strength")
-        elif (backpack_choose == new_sword.name or backpack_choose == str(new_sword.position)):
+        elif (backpack_choose == new_sword.name or backpack_choose == "{}".format(new_sword.position)):
             if (new_sword.count > 0):
                 hero_damage_add += new_sword.add_damage
                 new_sword.count -= 1
                 print("\nYou look epic! Your damage was increased")
             elif (new_sword.count < 1):
                 print("\nYou don't have any sword")
-        elif (backpack_choose == knife.name or backpack_choose == str(knife.position)):
+        elif (backpack_choose == knife.name or backpack_choose == "{}".format(knife.position)):
             if (knife.count > 0):
                 hero_damage_add += knife.add_damage
                 knife.count -= 1
                 print("\nYou look scary! Your damage was increased")
             elif (knife.count < 1):
                 print("\nYou don't have any knife")
-        elif (backpack_choose == stylish_hat.name or backpack_choose == str(stylish_hat.position)):
+        elif (backpack_choose == stylish_hat.name or backpack_choose == "{}".format(stylish_hat.position)):
             if (stylish_hat.count > 0):
                 hero_health_max += stylish_hat.add_health
                 stylish_hat.count -= 1
                 print("\nYou look cool! Your health was increased")
             elif (stylish_hat.count < 1):
                 print("\nYou don't have any hat")
-        elif (backpack_choose == patent_shoes.name or backpack_choose == str(patent_shoes.position)):
+        elif (backpack_choose == patent_shoes.name or backpack_choose == "{}".format(patent_shoes.position)):
             if (patent_shoes.count > 0):
                 hero_health_max += patent_shoes.add_health
                 patent_shoes.count -= 1
                 print("\nNice shoes! Your health was increased")
             elif (patent_shoes.count < 1):
                 print("\nYou don't have any shoes")
-        elif (backpack_choose == knitted_mittens.name or backpack_choose == str(knitted_mittens.position)):
+        elif (backpack_choose == knitted_mittens.name or backpack_choose == "{}".format(knitted_mittens.position)):
             if (knitted_mittens.count > 0):
                 hero_health_max += knitted_mittens.add_health
                 knitted_mittens.count -= 1
@@ -304,199 +304,199 @@ while hero_health > 0:              #main menu cycle
             break
 
         elif direction_choose in direction:
-            print("You have moved", direction_choose)
+            print("You have moved {}".format(direction_choose))
             current_happening = random.choice(happenings)
             match current_happening:
                 case ghoul.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[0] and ghoul.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= ghoul.damage
                         ghoul.health -= hero_damage_summ
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(ghoul.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, ghoul.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif ghoul.health < 1:
-                            print("\n" + current_happening + " damage you " + str(ghoul.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, ghoul.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(ghoul.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, ghoul.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     ghoul.health = ghoul.health_default
                 case rat.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[1] and rat.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= rat.damage
                         rat.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(rat.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, rat.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif rat.health < 1:
-                            print("\n" + current_happening + " damage you " + str(rat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, rat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(rat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, rat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     rat.health = rat.health_default
                 case mutated_rat.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[2] and mutated_rat.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= mutated_rat.damage
                         mutated_rat.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(mutated_rat.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, mutated_rat.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif mutated_rat.health < 1:
-                            print("\n" + current_happening + " damage you " + str(mutated_rat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, mutated_rat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(mutated_rat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, mutated_rat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     mutated_rat.health = mutated_rat.health_default
                 case feral_cat.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[3] and feral_cat.health > 0 and hero_health > 0):
                         return_damage()                    
                         hero_health -= feral_cat.damage
                         feral_cat.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(feral_cat.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, feral_cat.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif feral_cat.health < 1:
-                            print("\n" + current_happening + " damage you " + str(feral_cat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, feral_cat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")                            
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(feral_cat.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, feral_cat.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     feral_cat.health = feral_cat.health_default
                 case feral_dog.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[4] and feral_dog.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= feral_dog.damage
                         feral_dog.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(feral_dog.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, feral_dog.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif feral_dog.health < 1:
-                            print("\n" + current_happening + " damage you " + str(feral_dog.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, feral_dog.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(feral_dog.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, feral_dog.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     feral_dog.health = feral_dog.health_default
                 case mutated_snake.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[5] and mutated_snake.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= mutated_snake.damage
                         mutated_snake.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(mutated_snake.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, mutated_snake.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif mutated_snake.health < 1:
-                            print("\n" + current_happening + " damage you " + str(mutated_snake.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, mutated_snake.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(mutated_snake.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, mutated_snake.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     mutated_snake.health = mutated_snake.health_default
                 case coyote.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[6] and coyote.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= coyote.damage
                         coyote.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(coyote.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, coyote.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif coyote.health < 1:
-                            print("\n" + current_happening + " damage you " + str(coyote.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, coyote.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(coyote.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, coyote.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     coyote.health = coyote.health_default
                 case scorpion.name:
-                    print("You will have a fight with " + current_happening + "!")
+                    print("You will have a fight with {}!".format(current_happening))
                     while (current_happening == happenings[7] and scorpion.health > 0 and hero_health > 0):
                         return_damage()
                         hero_health -= scorpion.damage
                         scorpion.health -= hero_damage
                         if hero_health < 1:
-                            print("\n" + current_happening + " damage you " + str(scorpion.damage) + " points!")
-                            print(current_happening + " killed you\n")
+                            print("\n{} damage you {} points!".format(current_happening, scorpion.damage))
+                            print("{} killed you\n".format(current_happening))
                             break
                         elif scorpion.health < 1:
-                            print("\n" + current_happening + " damage you " + str(scorpion.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, scorpion.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")                        
+                            print("\nYou damage {} {} points! ".format(current_happening, hero_damage_summ))                        
                             winning_info()
-                            input("\npress any key to continue")
+                            input("\npress Enter to continue")
                             break
                         else:
-                            print("\n" + current_happening + " damage you " + str(scorpion.damage) + " points! ")
+                            print("\n{} damage you {} points! ".format(current_happening, scorpion.damage))
                             health_info()
-                            print("\nYou damage " + current_happening + " " + str(hero_damage_summ) + " points!")
-                            input("\npress any key to attack")
+                            print("\nYou damage {} {} points!".format(current_happening, hero_damage_summ))
+                            input("\npress Enter to attack")
                             continue
                     scorpion.health = scorpion.health_default
                 case ("someone's cache" | "an broken house"):
